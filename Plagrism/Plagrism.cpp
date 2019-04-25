@@ -2,11 +2,32 @@
 //
 
 #include "pch.h"
-#include <iostream>
+#include "Document.h"
 
-int main()
+#include <iostream>
+#include <dirent.h>
+
+using namespace std;
+
+int getdir(string dir, vector<string> &files)
 {
-    std::cout << "Hello World!\n"; 
+	DIR *dp;
+	struct dirent *dirp;
+	if ((dp = opendir(dir.c_str())) == NULL) {
+		cout << "Error(" << errno << ") opening " << dir << endl;
+		return errno;
+	}
+
+	while ((dirp = readdir(dp)) != NULL) {
+		files.push_back(string(dirp->d_name));
+	}
+	closedir(dp);
+	return 0;
+}
+
+int main(int argc, char * argv[]){
+	Document("C:\\Users\\mithi\\Desktop\\sm_doc_set\\ckh80.txt", 5);
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

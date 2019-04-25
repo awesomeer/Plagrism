@@ -6,9 +6,9 @@ using namespace std;
 
 class Document{
 	private:
-		vector<string> sequence;
-		int numSequence;
-		string FileName;
+		vector<vector<string>> sequence;
+		string filePath;
+		string fileName;
 
 	public:
 		Document();
