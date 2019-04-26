@@ -7,6 +7,7 @@ using namespace std;
 class Document{
 	private:
 		vector<vector<string>> sequence;
+		int lenWord;
 		string filePath;
 		string fileName;
 

@@ -26,7 +26,17 @@ int getdir(string dir, vector<string> &files)
 }
 
 int main(int argc, char * argv[]){
-	Document("C:\\Users\\mithi\\Desktop\\sm_doc_set\\ckh80.txt", 5);
+	string mainDir = argv[1];
+	vector<string> files;
+	getdir(mainDir, files);
+
+
+	
+	vector<Document> docs;
+	for (int i = 2; i < files.size(); i++) {
+		Document add(mainDir + files[i], 10);
+		docs.push_back(add);
+	}
 
 }
 
