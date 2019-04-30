@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "Document.h"
+#include "HashTable.h"
 
 #include <iostream>
 #include <dirent.h>
@@ -29,15 +30,16 @@ int main(int argc, char * argv[]){
 	string mainDir = argv[1];
 	vector<string> files;
 	getdir(mainDir, files);
-
+	files.erase(files.begin(), files.begin() + 2); //gets rid of . and .. dir
 
 	
 	vector<Document> docs;
-	for (int i = 2; i < files.size(); i++) {
-		Document add(mainDir + files[i], 10);
+	for (int i = 0; i < files.size(); i++) {
+		Document add(mainDir + '\\' + files[i], 10);
 		docs.push_back(add);
 	}
 
+	HashTable test(100);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

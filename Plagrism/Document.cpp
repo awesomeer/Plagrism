@@ -16,10 +16,10 @@ Document::Document(string file, int n) {
 
 	int bin = file.find_last_of("\\");
 	if (bin != -1) {
-		fileName = file.substr(bin+1, file.find_first_of('.', bin));
+		fileName = file.substr(bin+1);
 	}
 	else {
-		fileName = file.substr(0, file.find_first_of('.'));
+		fileName = file;
 	}
 	filePath = file;
 
@@ -44,7 +44,8 @@ Document::Document(string file, int n) {
 		add.push_back(temp);
 		sequence.push_back(add);
 	}
-
+	
+	//cout << fileName << endl;
 	/*cout << fileName << endl;
 	cout << filePath << endl;
 	cout << sequence.size() << endl;
@@ -59,7 +60,55 @@ Document::Document(string file, int n) {
 
 }
 
+void Document::outPermutations() {
+	for (int i = 0; i < sequence.size(); i++) {
+		for (int j = 0; j < lenWord; j++) {
+			cout << sequence[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+vector<string> Document::operator [](int x) {
+	if (x < sequence.size())
+		return sequence[x];
+}
+
 
 Document::~Document(){
 
+}
+
+
+//Getters and Setters
+vector<vector<string>> Document::getSequence() {
+	return sequence;
+}
+
+int Document::getLenWord() {
+	return lenWord;
+}
+
+string Document::getFilePath() {
+	return filePath;
+}
+
+string Document::getFileName() {
+	return fileName;
+}
+
+void Document::setSequence(vector<vector<string>> set) {
+	sequence = set;
+}
+
+void Document::setLenWord(int set) {
+	lenWord = set;
+}
+
+void Document::setFilePath(string set) {
+	filePath = set;
+}
+
+void Document::setFileName(string set) {
+	fileName = set;
 }
