@@ -8,13 +8,18 @@ class HashTable{
 	public:
 		HashTable();
 		HashTable(int size);
+		void insert(vector<string>, string);
+		int getNumCollesion(string, string);
 		~HashTable();
 
 	private:
 		typedef struct HashNode {
-			vector<string> data;
+			string fileName;
+			int fileIndex;
 			struct HashNode * next;
 		}HashNode_t;
+
+		int hash(vector<string>);
 
 		HashNode_t ** root;
 		int tableSize;
