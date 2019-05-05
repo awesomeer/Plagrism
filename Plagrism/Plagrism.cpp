@@ -38,8 +38,23 @@ int main(int argc, char * argv[]){
 	getdir(mainDir, files);
 	files.erase(files.begin(), files.begin() + 2); //gets rid of . and .. dir
 
-	
-	vector<Document> docs;
+	HashTable test(10000);
+	for (int i = 0; i < files.size(); i++) {
+		Document add(mainDir + "\\" + files[i], atoi(argv[2]));
+		test.insert(add);
+	}
+
+	int ** comparisons = (int **) new (int *)[files.size()];
+	for (int i = 0; i < files.size(); i++) {
+		comparisons[i] = (int *) new int[files.size()];
+	}
+
+	for (int i = 0; i < files.size() - 1; i++) {
+		for (int j = i + 1; j < files.size(); j++) {
+			cout << test.getNumCollesion(files[i], files[j]) << endl;
+		}
+	}
+	/*vector<Document> docs;
 	for (int i = 0; i < files.size(); i++) {
 		Document add(mainDir + '\\' + files[i], atoi(argv[2]));
 		docs.push_back(add);
@@ -52,7 +67,7 @@ int main(int argc, char * argv[]){
 		for (int j = i + 1; j < docs.size(); j++) {
 			cout << test.getNumCollesion(docs[i].getFileName(), docs[j].getFileName()) << endl;
 		}
-	}
+	}*/
 
 }
 

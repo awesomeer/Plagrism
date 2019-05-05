@@ -19,13 +19,13 @@ HashTable::HashTable(int tableSize) {
 }
 
 int HashTable::hash(vector<string> input) {
-	int sum = 0;
+	long long sum = 0;
 	for (string s : input) {
 		for (int i = 0; i < s.length(); i++)
 			sum += s[i];
 	}
 
-	return sum % tableSize;
+	return abs(sum % tableSize);
 }
 
 void HashTable::insert(Document insert) {
