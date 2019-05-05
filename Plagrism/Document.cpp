@@ -69,6 +69,10 @@ void Document::outPermutations() {
 	}
 }
 
+int Document::getSequenceLen() {
+	return sequence.size();
+}
+
 vector<string> Document::operator [](int x) {
 	if (x < sequence.size())
 		return sequence[x];

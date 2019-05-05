@@ -26,11 +26,9 @@ int getdir(string dir, vector<string> &files)
 	return 0;
 }
 
-void hashDocuments(vector<Document> docs, HashTable &hash) {
-	for (Document doc : docs) {
-		for (int i = 0; i < doc.getSequence().size(); i++) {
-			hash.insert(doc[i], doc.getFileName());
-		}
+void insertDocs(vector<Document> docs, HashTable &hash) {
+	for (int i = 0; i < docs.size(); i++) {
+		hash.insert(docs[i]);
 	}
 }
 
@@ -43,21 +41,19 @@ int main(int argc, char * argv[]){
 	
 	vector<Document> docs;
 	for (int i = 0; i < files.size(); i++) {
-		Document add(mainDir + '\\' + files[i], 10);
+		Document add(mainDir + '\\' + files[i], atoi(argv[2]));
 		docs.push_back(add);
 	}
 
 	HashTable test(10000);
-	//hashDocuments(docs, test);
+	insertDocs(docs, test);
 
-	for (int i = 0; i < docs[6].getSequence().size(); i++) {
-		test.insert(docs[6][i], docs[6].getFileName());
+	for (int i = 0; i < docs.size()-1; i++) {
+		for (int j = i + 1; j < docs.size(); j++) {
+			cout << test.getNumCollesion(docs[i].getFileName(), docs[j].getFileName()) << endl;
+		}
 	}
-	for (int i = 0; i < docs[8].getSequence().size(); i++) {
-		test.insert(docs[8][i], docs[8].getFileName());
-	}
-	cout << test.getNumCollesion(docs[6].getFileName(), docs[8].getFileName());
-	
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

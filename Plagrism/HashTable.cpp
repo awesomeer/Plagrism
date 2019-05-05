@@ -1,17 +1,20 @@
 #include "pch.h"
 #include "HashTable.h"
-
 #include <iostream>
 
 HashTable::HashTable() {
 	tableSize = 0;
-	root = nullptr;
 }
 
 HashTable::HashTable(int tableSize) {
-	this->tableSize = tableSize;
-	root = (HashNode_t **)malloc(sizeof(HashNode_t *) * this->tableSize);
-	for (int i = 0; i < tableSize; i++)
+	if (tableSize > maxSize) {
+		this->tableSize = maxSize;
+	}
+	else {
+		this->tableSize = tableSize;
+	}
+
+	for (int i = 0; i < this->tableSize; i++)
 		root[i] = nullptr;
 }
 
@@ -25,18 +28,27 @@ int HashTable::hash(vector<string> input) {
 	return sum % tableSize;
 }
 
-void HashTable::insert(vector<string> input, string fileName) {
-	int index = hash(input);
-	HashNode_t * temp = root[index];
+void HashTable::insert(Document insert) {
+	for (int i = 0; i < insert.getSequenceLen(); i++) {
+		int index = hash(insert[i]);
+		HashNode_t * prev = nullptr;
+		HashNode_t * curr = root[index];
 
-	while (temp != nullptr) {
-		temp = temp->next;
-	}
+		if (curr == nullptr) {
+			curr = new HashNode_t{ insert.getFileName(), nullptr };
+			root[index] = curr;
+			continue;
+		}
 
-	if (temp == nullptr) {
-		temp = new HashNode_t;
-		temp->fileName = fileName;
-		temp->next = nullptr;
+		while (curr != nullptr) {
+			prev = curr;
+			curr = curr->next;
+		}
+
+		curr = new HashNode_t{ insert.getFileName(), nullptr };
+		if (prev != nullptr) {
+			prev->next = curr;
+		}
 	}
 }
 
@@ -45,21 +57,23 @@ int HashTable::getNumCollesion(string compare, string to) {
 	for (int i = 0; i < tableSize; i++) {
 		int compareCount = 0;
 		int toCount = 0;
-		HashNode_t * index = root[i];
+		HashNode_t * pt = root[i];
+		
+		if (pt == nullptr)
+			continue;
 
-		while (index != nullptr) {
-			if (index->fileName == compare) {
+		while (pt != nullptr) {
+			if (pt->fileName == compare) {
 				compareCount++;
 			}
-			else if (index->fileName == to) {
+			else if (pt->fileName == to) {
 				toCount++;
 			}
-			index = index->next;
+
+			pt = pt->next;
 		}
 
-		if (compareCount > 0) {
-			sum += toCount;
-		}
+		sum += _Min_value(compareCount, toCount);
 	}
 
 	return sum;

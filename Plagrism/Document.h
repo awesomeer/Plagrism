@@ -15,6 +15,7 @@ class Document{
 		Document();
 		Document(string file, int n);
 		void outPermutations();
+		int getSequenceLen();
 
 
 		vector<vector<string>> getSequence();
