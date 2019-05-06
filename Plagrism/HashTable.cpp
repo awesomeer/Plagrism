@@ -21,8 +21,8 @@ HashTable::HashTable(int tableSize) {
 int HashTable::hash(vector<string> input) {
 	long long sum = 0;
 	for (string s : input) {
-		for (int i = 0; i < s.length(); i++)
-			sum += s[i]*i;
+		for (int i = 0; i < s.length() - 1; i++)
+			sum += s[i] * s[i + 1];
 	}
 
 	return abs(sum % tableSize);
