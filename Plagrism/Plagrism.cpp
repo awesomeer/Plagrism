@@ -26,48 +26,29 @@ int getdir(string dir, vector<string> &files)
 	return 0;
 }
 
-void insertDocs(vector<Document> docs, HashTable &hash) {
-	for (int i = 0; i < docs.size(); i++) {
-		hash.insert(docs[i]);
-	}
-}
-
 int main(int argc, char * argv[]){
 	string mainDir = argv[1];
 	vector<string> files;
 	getdir(mainDir, files);
 	files.erase(files.begin(), files.begin() + 2); //gets rid of . and .. dir
 
-	HashTable test(10000);
+	HashTable test(12547);
 	for (int i = 0; i < files.size(); i++) {
 		Document add(mainDir + "\\" + files[i], atoi(argv[2]));
 		test.insert(add);
 	}
 
-	int ** comparisons = (int **) new (int *)[files.size()];
-	for (int i = 0; i < files.size(); i++) {
-		comparisons[i] = (int *) new int[files.size()];
-	}
-
+	int count = 0;
 	for (int i = 0; i < files.size() - 1; i++) {
 		for (int j = i + 1; j < files.size(); j++) {
-			cout << test.getNumCollesion(files[i], files[j]) << endl;
+			int colls = test.getNumCollesion(files[i], files[j]);
+			if (colls >= atoi(argv[3])) {
+				cout << colls << ": " << files[i] << " " << files[j] << endl;
+				count++;
+			}
 		}
 	}
-	/*vector<Document> docs;
-	for (int i = 0; i < files.size(); i++) {
-		Document add(mainDir + '\\' + files[i], atoi(argv[2]));
-		docs.push_back(add);
-	}
-
-	HashTable test(10000);
-	insertDocs(docs, test);
-
-	for (int i = 0; i < docs.size()-1; i++) {
-		for (int j = i + 1; j < docs.size(); j++) {
-			cout << test.getNumCollesion(docs[i].getFileName(), docs[j].getFileName()) << endl;
-		}
-	}*/
+	cout << "count: " << count << endl;
 
 }
 

@@ -22,7 +22,7 @@ int HashTable::hash(vector<string> input) {
 	long long sum = 0;
 	for (string s : input) {
 		for (int i = 0; i < s.length(); i++)
-			sum += s[i];
+			sum += s[i]*i;
 	}
 
 	return abs(sum % tableSize);
