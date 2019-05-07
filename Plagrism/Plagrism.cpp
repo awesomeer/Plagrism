@@ -20,6 +20,9 @@ int getdir(string dir, vector<string> &files)
 	}
 
 	while ((dirp = readdir(dp)) != NULL) {
+		if(string(dirp->d_name) == ".." || string(dirp->d_name) == ".")
+			continue;
+			
 		files.push_back(string(dirp->d_name));
 	}
 	closedir(dp);
@@ -30,18 +33,22 @@ int main(int argc, char * argv[]){
 	string mainDir = argv[1];
 	vector<string> files;
 	getdir(mainDir, files);
-	files.erase(files.begin(), files.begin() + 2); //gets rid of . and .. dir
+//	files.erase(files.begin(), files.begin() + 2); //gets rid of .. and . directories
 
-	HashTable test(12547);
+	cout << "Creating Hash Table" << endl;
+	HashTable test(100003);
 	for (int i = 0; i < files.size(); i++) {
-		Document add(mainDir + "\\" + files[i], atoi(argv[2]));
+		Document add(mainDir + "/" + files[i], atoi(argv[2]));
 		test.insert(add);
+		cout << i + 1 << "/" << files.size() << endl;
 	}
-
+	
+	cout << "Checking for cheaters" << endl;
 	int count = 0;
 	for (int i = 0; i < files.size() - 1; i++) {
 		for (int j = i + 1; j < files.size(); j++) {
 			int colls = test.getNumCollesion(files[i], files[j]);
+//cout << files[i] << " " <<  files[j] << ": " << colls << endl;
 			if (colls >= atoi(argv[3])) {
 				cout << colls << ": " << files[i] << " " << files[j] << endl;
 				count++;
