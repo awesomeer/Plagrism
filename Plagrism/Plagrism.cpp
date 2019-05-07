@@ -34,6 +34,10 @@ int main(int argc, char * argv[]){
 	vector<string> files;
 	getdir(mainDir, files);
 //	files.erase(files.begin(), files.begin() + 2); //gets rid of .. and . directories
+	
+	for(int i = 0; i < files.size(); i++){
+		cout << files[i] << endl;
+	}
 
 	cout << "Creating Hash Table" << endl;
 	HashTable test(100003);
