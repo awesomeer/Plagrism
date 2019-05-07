@@ -14,7 +14,7 @@ Document::Document(string file, int n) {
 	lenWord = n;
 
 
-	int bin = file.find_last_of("\\");
+	int bin = file.find_last_of("/");
 	if (bin != -1) {
 		fileName = file.substr(bin+1);
 	}
