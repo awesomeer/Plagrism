@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "HashTable.h"
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 HashTable::HashTable() {
 	tableSize = 0;
@@ -21,6 +24,9 @@ HashTable::HashTable(int tableSize) {
 int HashTable::hash(vector<string> input) {
 	long long sum = 0;
 	for (string s : input) {
+		if(s.length() == 0)
+			continue;
+
 		for (int i = 0; i < s.length() - 1; i++)
 			sum += s[i] * s[i + 1];
 	}
@@ -55,6 +61,7 @@ void HashTable::insert(Document insert) {
 int HashTable::getNumCollesion(string compare, string to) {
 	int sum = 0;
 	for (int i = 0; i < tableSize; i++) {
+//cout << compare << " " << to << " " << i << endl;
 		int compareCount = 0;
 		int toCount = 0;
 		HashNode_t * pt = root[i];
@@ -72,13 +79,20 @@ int HashTable::getNumCollesion(string compare, string to) {
 
 			pt = pt->next;
 		}
-
-		sum += _Min_value(compareCount, toCount);
+//cout << compareCount << " " << toCount << endl;
+		if(compareCount < toCount)
+			sum += compareCount;
+		else
+			sum += toCount;
+//		sum += _Min_value(compareCount, toCount);
 	}
 
 	return sum;
 }
 
 HashTable::~HashTable(){
-
+//	for(int i = 0; i < tableSize; i++){
+//		cout << root[i] << endl;
+//	}
+	cout << "tableSize " << tableSize << endl;
 }
