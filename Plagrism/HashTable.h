@@ -2,7 +2,7 @@
 #include "Document.h"
 #include <vector>
 #include <string>
-#define maxSize 12547
+#define maxSize 100003
 using namespace std;
 
 class HashTable{
